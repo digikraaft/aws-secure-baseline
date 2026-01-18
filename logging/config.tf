@@ -3,7 +3,7 @@ resource "aws_config_configuration_recorder" "main" {
   role_arn = aws_iam_role.config_role.arn
 
   recording_group {
-    all_supported                = true
+    all_supported                 = true
     include_global_resource_types = true
   }
 }
@@ -41,3 +41,4 @@ resource "aws_iam_role_policy_attachment" "config_policy" {
   role       = aws_iam_role.config_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWS_ConfigRole"
 }
+
