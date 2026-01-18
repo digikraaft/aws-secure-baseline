@@ -1,0 +1,30 @@
+name: Validate Secure Baseline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.7.0"
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+
+      - name: Validate Root Module
+        run: |
+          terraform init -backend=false
+          terraform validate
+
+      - name: Validate Example (Complete)
+        run: |
+          cd examples/complete
+          terraform init -backend=false
+          terraform validate
